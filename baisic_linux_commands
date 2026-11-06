@@ -1,0 +1,795 @@
+# Linux Commands Cheat Sheet
+## Beginner to SOC Analyst
+
+A practical reference for learning Linux commands, system administration, networking and cybersecurity fundamentals.
+
+**Operating System:** Kali Linux / Ubuntu / Debian  
+**Purpose:** Linux Fundamentals and SOC Analyst Preparation
+
+---
+
+# 1. Basic Linux Commands
+
+| Command | Description |
+|---|---|
+| `whoami` | Displays current username |
+| `who` | Displays logged-in users |
+| `pwd` | Shows current working directory |
+| `date` | Displays current date and time |
+| `cal` | Displays calendar |
+| `clear` | Clears terminal |
+| `history` | Displays previously executed commands |
+| `man command` | Opens command manual |
+| `command --help` | Displays command help |
+| `exit` | Exits terminal session |
+
+Examples:
+
+```bash
+whoami
+pwd
+date
+history
+man ls
+ls --help
+```
+
+# 2. File and Directory Management
+
+### Listing files
+
+| Command | Description |
+|---|---|
+| `ls` | Lists files and directories |
+| `ls -l` | Detailed file listing |
+| `ls -a` | Shows hidden files |
+| `ls -la` | Detailed listing including hidden files |
+| `ls -lh` | Displays file sizes in readable format |
+| `ls -R` | Lists directories recursively |
+
+### Navigating directories
+
+| Command | Description |
+|---|---|
+| `cd directory` | Enters a directory |
+| `cd ..` | Moves one directory backward |
+| `cd ~` | Moves to home directory |
+| `cd /` | Moves to root directory |
+| `cd -` | Returns to previous directory |
+
+### Creating files and directories
+
+```bash
+mkdir projects
+mkdir -p projects/linux/notes
+touch notes.txt
+```
+
+| Command | Description |
+|---|---|
+| `mkdir` | Creates a directory |
+| `mkdir -p` | Creates nested directories |
+| `touch` | Creates an empty file |
+| `rmdir` | Removes an empty directory |
+
+### Copying, moving and deleting
+
+```bash
+cp file.txt backup.txt
+cp -r folder backup_folder
+
+mv old.txt new.txt
+mv file.txt folder/
+
+rm file.txt
+rm -i file.txt
+rm -r folder/
+```
+
+| Command | Description |
+|---|---|
+| `cp` | Copies files |
+| `cp -r` | Copies directories recursively |
+| `mv` | Moves or renames files |
+| `rm` | Removes files |
+| `rm -i` | Asks before deleting |
+| `rm -r` | Removes directories recursively |
+
+**Warning:** Avoid `rm -rf` unless you fully understand the target path. Deleted files may not be recoverable.
+
+# 3. Viewing and Editing Files
+
+| Command | Description |
+|---|---|
+| `cat file.txt` | Displays file contents |
+| `cat -n file.txt` | Displays contents with line numbers |
+| `less file.txt` | Views large files page by page |
+| `more file.txt` | Views files page by page |
+| `head file.txt` | Displays first 10 lines |
+| `tail file.txt` | Displays last 10 lines |
+| `tail -f file.log` | Continuously monitors a log file |
+| `nano file.txt` | Opens Nano editor |
+| `vim file.txt` | Opens Vim editor |
+
+Examples:
+
+```bash
+cat notes.txt
+head -n 20 file.txt
+tail -n 20 file.txt
+tail -f /var/log/syslog
+nano notes.txt
+```
+
+# 4. Searching and Text Processing
+
+| Command | Description |
+|---|---|
+| `find` | Searches for files and directories |
+| `locate` | Finds files using a database |
+| `grep` | Searches for matching text |
+| `wc` | Counts lines, words and bytes |
+| `sort` | Sorts lines |
+| `uniq` | Removes adjacent duplicate lines |
+| `cut` | Extracts specific fields |
+| `sed` | Edits or transforms text |
+| `awk` | Processes structured text |
+| `diff` | Compares two files |
+
+Examples:
+
+```bash
+find . -name "*.txt"
+
+locate notes.txt
+
+grep "error" logfile.txt
+
+grep -i "failed" logfile.txt
+
+grep -n "error" logfile.txt
+
+grep -r "password" /var/log/
+
+wc -l logfile.txt
+
+sort names.txt
+
+sort names.txt | uniq
+
+cut -d: -f1 /etc/passwd
+
+sed 's/love/hate/g' file.txt
+
+awk -F: '{print $1}' /etc/passwd
+
+diff file1.txt file2.txt
+```
+
+# 5. Linux File Permissions
+
+Linux uses three primary permissions:
+
+| Permission | Meaning | Numeric value |
+|---|---|---|
+| Read (`r`) | Read file contents | 4 |
+| Write (`w`) | Modify file contents | 2 |
+| Execute (`x`) | Execute a file | 1 |
+
+Permission groups:
+
+- User (u)
+- Group (g)
+- Others (o)
+
+### Important commands
+
+```bash
+ls -l
+chmod 755 script.sh
+chmod 744 file.txt
+chmod u+x script.sh
+chmod go-w file.txt
+chown username file.txt
+chown username:group file.txt
+```
+
+Example:
+
+`chmod 755 script.sh`
+
+- Owner: Read, Write, Execute
+- Group: Read, Execute
+- Others: Read, Execute
+
+# 6. User and System Administration
+
+| Command | Description |
+|---|---|
+| `sudo` | Executes a command with elevated privileges |
+| `su` | Switches user |
+| `passwd` | Changes password |
+| `whoami` | Displays current user |
+| `who` | Shows logged-in users |
+| `id` | Displays user and group IDs |
+| `groups` | Displays group memberships |
+| `hostname` | Displays system hostname |
+| `uname -a` | Displays system information |
+
+Examples:
+
+```bash
+sudo apt update
+sudo apt upgrade
+
+id
+groups
+hostname
+uname -a
+
+passwd
+sudo su
+```
+
+# 7. Process Management
+
+A process is a running program or service. Every process has a Process ID (PID).
+
+| Command | Description |
+|---|---|
+| `ps` | Displays running processes |
+| `ps aux` | Displays detailed process information |
+| `top` | Monitors running processes |
+| `htop` | Interactive process monitor |
+| `kill PID` | Sends termination signal |
+| `kill -9 PID` | Forcefully terminates a process |
+| `jobs` | Displays background jobs |
+| `bg` | Runs a suspended job in background |
+| `fg` | Brings a job to foreground |
+| `pgrep` | Searches for process IDs |
+| `pkill` | Terminates processes by name |
+
+Examples:
+
+```bash
+ps
+ps aux
+top
+htop
+
+pgrep firefox
+kill 1234
+jobs
+```
+
+Replace `1234` with the actual process ID.
+
+# 8. Archiving and Compression
+
+| Command | Description |
+|---|---|
+| `tar -cvf` | Creates a TAR archive |
+| `tar -xvf` | Extracts a TAR archive |
+| `tar -czvf` | Creates compressed TAR archive |
+| `tar -xzvf` | Extracts compressed TAR archive |
+| `zip` | Creates ZIP archive |
+| `unzip` | Extracts ZIP archive |
+| `gzip` | Compresses a file |
+| `gunzip` | Decompresses a GZIP file |
+
+Examples:
+
+```bash
+tar -cvf archive.tar folder/
+
+tar -xvf archive.tar
+
+tar -czvf archive.tar.gz folder/
+
+tar -xzvf archive.tar.gz
+
+zip archive.zip file.txt
+
+unzip archive.zip
+
+gzip file.txt
+
+gunzip file.txt.gz
+```
+
+# 9. Networking Commands
+
+Networking knowledge is essential for SOC Analysts.
+
+| Command | Description |
+|---|---|
+| `ip a` | Displays network interfaces and IP addresses |
+| `ip route` | Displays routing table |
+| `ping` | Tests network connectivity |
+| `traceroute` | Displays network route |
+| `ss -tuln` | Displays listening TCP/UDP ports |
+| `ss -tulnp` | Displays listening ports and processes |
+| `netstat` | Displays network connections (if installed) |
+| `nslookup` | Queries DNS records |
+| `dig` | Performs DNS lookups |
+| `hostname -I` | Displays IP addresses |
+| `curl` | Makes HTTP requests |
+| `wget` | Downloads files |
+| `ssh` | Connects to remote systems |
+| `scp` | Securely copies files between systems |
+
+Examples:
+
+```bash
+ip a
+
+ip route
+
+ping -c 4 8.8.8.8
+
+traceroute google.com
+
+ss -tuln
+
+ss -tulnp
+
+nslookup google.com
+
+dig google.com
+
+curl -I https://google.com
+
+ssh username@192.168.1.10
+
+scp file.txt username@192.168.1.10:~/
+```
+
+# 10. Linux File Systems and Disk Management
+
+| Command | Description |
+|---|---|
+| `df -h` | Displays disk space |
+| `du -sh` | Displays directory size |
+| `lsblk` | Lists storage devices |
+| `fdisk -l` | Displays disk partitions |
+| `mount` | Mounts a filesystem |
+| `umount` | Unmounts a filesystem |
+| `findmnt` | Displays mounted filesystems |
+| `quota -v` | Displays user disk quotas, if configured |
+
+Examples:
+
+```bash
+df -h
+
+du -sh /home
+
+lsblk
+
+sudo fdisk -l
+
+findmnt
+```
+
+# 11. Shell Operators, Pipes and Redirection
+
+These are important for combining commands and analysing logs.
+
+| Operator | Description |
+|---|---|
+| `>` | Redirects output and overwrites a file |
+| `>>` | Appends output to a file |
+| `<` | Takes input from a file |
+| `|` | Passes output to another command |
+| `&&` | Runs next command if previous succeeds |
+| `||` | Runs next command if previous fails |
+| `&` | Runs a process in background |
+
+Examples:
+
+```bash
+ls > files.txt
+
+echo "Linux Learning" >> notes.txt
+
+cat < notes.txt
+
+ps aux | grep ssh
+
+sudo apt update && sudo apt upgrade
+
+mkdir test || echo "Directory creation failed"
+
+firefox &
+```
+
+# 12. SOC Analyst - Linux Log Investigation
+
+Logs are records of system activities and events. SOC Analysts examine logs to identify suspicious activities and investigate security alerts.
+
+### Important Linux log locations
+
+| Location | Purpose |
+|---|---|
+| `/var/log/syslog` | General system logs on Debian-based systems |
+| `/var/log/auth.log` | Authentication and authorization logs |
+| `/var/log/kern.log` | Kernel-related logs |
+| `/var/log/dpkg.log` | Package management logs |
+| `/var/log/` | Main Linux log directory |
+
+Note: Kali and other Linux distributions may use different logging configurations. Some systems use systemd journal instead of traditional log files.
+
+### Viewing logs
+
+```bash
+ls -lah /var/log/
+
+sudo cat /var/log/auth.log
+
+sudo less /var/log/auth.log
+
+sudo tail -f /var/log/auth.log
+
+sudo journalctl
+
+sudo journalctl -n 50
+
+sudo journalctl -f
+
+sudo journalctl -p warning
+```
+
+### Investigating failed login attempts
+
+```bash
+sudo grep -i "failed" /var/log/auth.log
+
+sudo grep -i "invalid user" /var/log/auth.log
+
+sudo grep -i "authentication failure" /var/log/auth.log
+```
+
+### Investigating successful logins
+
+```bash
+last
+
+lastlog
+
+who
+
+w
+```
+
+### Searching for suspicious activity
+
+```bash
+sudo grep -i "error" /var/log/syslog
+
+sudo grep -i "failed" /var/log/auth.log
+
+sudo journalctl -p err
+
+sudo journalctl --since "1 hour ago"
+```
+
+# 13. SOC Analyst - User and Account Investigation
+
+```bash
+whoami
+
+id
+
+who
+
+w
+
+last
+
+lastlog
+
+cat /etc/passwd
+
+sudo cat /etc/shadow
+
+groups
+
+getent passwd
+```
+
+Purpose:
+
+- Identify logged-in users.
+- Check user IDs and group memberships.
+- Review account information.
+- Investigate login history.
+- Identify potentially unexpected accounts.
+
+**Note:** `/etc/shadow` contains password hashes and is restricted. Do not share its contents publicly.
+
+# 14. SOC Analyst - Network Investigation
+
+```bash
+ip a
+
+ip route
+
+ss -tulnp
+
+ss -ant
+
+ping -c 4 8.8.8.8
+
+nslookup example.com
+
+dig example.com
+
+traceroute example.com
+
+hostname -I
+```
+
+Purpose:
+
+- Identify IP addresses.
+- Check active network connections.
+- Identify listening ports.
+- Investigate DNS resolution.
+- Understand network routes.
+
+# 15. SOC Analyst - System Monitoring
+
+```bash
+top
+
+htop
+
+ps aux
+
+free -h
+
+df -h
+
+du -sh /var/log/
+
+uptime
+
+uname -a
+
+hostnamectl
+
+systemctl --type=service --state=running
+```
+
+Purpose:
+
+- Monitor CPU and memory.
+- Identify resource-intensive processes.
+- Review running services.
+- Check system uptime.
+- Investigate unusual system behaviour.
+
+# 16. Service Management
+
+`systemctl` is used to manage services on systemd-based Linux distributions.
+
+```bash
+systemctl status ssh
+
+sudo systemctl start ssh
+
+sudo systemctl stop ssh
+
+sudo systemctl restart ssh
+
+sudo systemctl enable ssh
+
+sudo systemctl disable ssh
+
+systemctl list-units --type=service
+```
+
+# 17. Package Management - Kali Linux
+
+Kali Linux uses the APT package manager.
+
+```bash
+sudo apt update
+
+sudo apt upgrade
+
+sudo apt full-upgrade
+
+sudo apt install package_name
+
+sudo apt remove package_name
+
+sudo apt purge package_name
+
+sudo apt autoremove
+
+apt search package_name
+
+apt show package_name
+```
+
+Examples:
+
+```bash
+sudo apt install wireshark
+
+sudo apt install nmap
+
+sudo apt install curl
+
+sudo apt install git
+```
+
+# 18. Important System Commands
+
+| Command | Description |
+|---|---|
+| `reboot` | Restarts the system |
+| `poweroff` | Shuts down the system |
+| `shutdown now` | Shuts down immediately |
+| `uptime` | Displays system uptime |
+| `free -h` | Displays RAM usage |
+| `uname -a` | Displays kernel information |
+| `cat /etc/os-release` | Displays Linux distribution information |
+| `hostnamectl` | Displays system details |
+
+Examples:
+
+```bash
+reboot
+
+sudo poweroff
+
+uptime
+
+free -h
+
+cat /etc/os-release
+
+hostnamectl
+```
+
+# 19. Important Command Learning Tips
+
+### Manual pages
+
+```bash
+man ls
+
+man grep
+
+man chmod
+
+man ps
+```
+
+### Help options
+
+```bash
+ls --help
+
+grep --help
+
+find --help
+```
+
+### Command history
+
+```bash
+history
+
+history | grep ssh
+```
+
+### Useful keyboard shortcuts
+
+| Shortcut | Function |
+|---|---|
+| `Ctrl + C` | Stops the current foreground command |
+| `Ctrl + Z` | Suspends the current foreground process |
+| `Ctrl + D` | Ends input or exits a shell |
+| `Ctrl + L` | Clears terminal display |
+| `Tab` | Autocompletes commands and paths |
+| `↑ / ↓` | Navigates command history |
+
+---
+
+# 20. Recommended SOC Analyst Practice
+
+Practise these commands regularly:
+
+**Day 1 – Linux Basics**
+```bash
+pwd
+ls -la
+cd
+mkdir
+touch
+cat
+```
+
+**Day 2 – File Investigation**
+```bash
+find
+grep
+head
+tail
+less
+wc
+```
+
+**Day 3 – User Investigation**
+```bash
+whoami
+id
+who
+w
+last
+lastlog
+```
+
+**Day 4 – Process Investigation**
+```bash
+ps aux
+top
+htop
+pgrep
+kill
+```
+
+**Day 5 – Network Investigation**
+```bash
+ip a
+ip route
+ping
+ss -tulnp
+nslookup
+dig
+```
+
+**Day 6 – Log Investigation**
+```bash
+journalctl
+journalctl -f
+grep
+tail -f
+```
+
+**Day 7 – System Administration**
+```bash
+chmod
+chown
+systemctl
+df -h
+free -h
+```
+
+---
+
+## Important Safety Notes
+
+1. Understand a command before executing it.
+2. Be careful with `sudo`, as it provides elevated privileges.
+3. Never execute unknown commands copied from the internet.
+4. Avoid destructive commands such as `rm -rf` without checking the target.
+5. Practise in your own Linux environment or authorised lab.
+6. Never investigate or scan systems without permission.
+
+## Learning Resources
+
+- Linux Manual Pages: https://man7.org/linux/man-pages/
+- Kali Linux Documentation: https://www.kali.org/docs/
+- Ubuntu Documentation: https://help.ubuntu.com/
+- Linux Journey: https://linuxjourney.com/
+- OverTheWire Bandit: https://overthewire.org/wargames/bandit/
+
+---
+
+**Goal:** Build strong Linux fundamentals, understand system behaviour, investigate logs, analyse network activity and develop practical SOC Analyst skills.
+
+*Keep practising. Understanding what a command does is more important than memorising it.*
